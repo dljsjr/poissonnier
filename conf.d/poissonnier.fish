@@ -207,12 +207,12 @@ if type -q mise && status is-interactive
         set -f mise_system_config_file (mise --quiet --silent settings --raw system_config_file 2>/dev/null || echo "/etc/mise/config.toml")
 
         { test -n "$MISE_CONFIG_DIR" && echo "$MISE_CONFIG_DIR" || { test -n "$XDG_CONFIG_HOME" && echo "$XDG_CONFIG_HOME/mise" || echo "$HOME/.config/mise"; }; } | read --function --line mise_cfg_root
-        { test -n "$MISE_DEFAULT_CONFIG_FILENAME" && echo "$MISE_DEFAULT_CONFIG_FILENAME" || echo "mise.toml" } | read --function --line mise_cfg_root
+        { test -n "$MISE_DEFAULT_CONFIG_FILENAME" && echo "$MISE_DEFAULT_CONFIG_FILENAME" || echo "mise.toml" } | read --function --line mise_default_cfg_file
 
         set -f mise_cfg_patterns (mise settings override_config_filenames | string trim --left --chars '[' | string trim --right --chars ']' | string split ", " | string unescape)
         # see: https://github.com/jdx/mise/blob/2a825caf2b92303ce41273dac09d0cd6ebd5dece/src/config/mod.rs#L966-L987
         if test -z "$mise_cfg_patterns"
-                set mise_cfg_patterns "$MISE_DEFAULT_CONFIG_FILENAME" '.config/mise/conf.d/*.toml' '.config/mise/config.toml' '.config/mise/mise.toml' '.config/mise.toml' '.mise/config.toml' 'mise/config.toml' '.rtx.toml' 'mise.toml' '.mise.toml' '.config/mise/config.local.toml' '.config/mise/mise.local.toml' '.config/mise.local.toml' '.mise/config.local.toml' 'mise/config.local.toml' '.rtx.local.toml' 'mise.local.toml' '.mise.local.toml'
+                set mise_cfg_patterns "$mise_default_cfg_file" '.config/mise/conf.d/*.toml' '.config/mise/config.toml' '.config/mise/mise.toml' '.config/mise.toml' '.mise/config.toml' 'mise/config.toml' '.rtx.toml' 'mise.toml' '.mise.toml' '.config/mise/config.local.toml' '.config/mise/mise.local.toml' '.config/mise.local.toml' '.mise/config.local.toml' 'mise/config.local.toml' '.rtx.local.toml' 'mise.local.toml' '.mise.local.toml'
         end
 
         # if the closest config isn't a local config, check for deactivate then early return.
