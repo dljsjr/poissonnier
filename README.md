@@ -5,6 +5,14 @@
 Poissonnier means fishmonger. But it is also the name for the fish cook in a French kitchen brigade,
 which `mise` also takes its name from.
 
+## Installation
+
+Install with [fisher](https://github.com/jorgebucaran/fisher):
+
+```console
+fisher install dljsjr/poissonnier
+```
+
 ## Features
 
 ### Automatically Activate Mise in directories with local configs
